@@ -1,7 +1,8 @@
-## Put comments here that give an overall description of what your
-## functions do
+## This function will find the inverse of a Matrix and it will
+## cache the results and return them if the same inverse is 
+## requsted again
 
-## Write a short comment describing this function
+## Returns a list containing fuctions needed to cache matrix inverse
 
 makeCacheMatrix <- function(x = matrix()) {
     i <- NULL
@@ -15,15 +16,20 @@ makeCacheMatrix <- function(x = matrix()) {
     list(set = set, get = get,
          set_inverse = set_inverse, 
          get_inverse = get_inverse)
-    list(set, get, set_inverse, get_inverse)
 }
 
 
-## Write a short comment describing this function
+## Checks if the matrix inverse has aleady been solved, if so it
+## retrieves it, else it solves for it and sets the cache 
 
 cacheSolve <- function(x, ...) {
-    ## Return a matrix that is the inverse of 'x'
     i <- x$get_inverse()
+    if(!is.null(i)){
+        message("Call me Cachius Clay, getting your data")
+        return(i)
+    }
+    data <- x$get()
+    i <- solve(data, ...)
+    x$set_inverse(i)
+    i
 }
-
-# test with matrix(rnorm(25)) or matrix(rnorm(25),5)
